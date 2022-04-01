@@ -54,7 +54,7 @@ public class OrderPageTest extends TestBase {
 		womenPage.switchToParentPage();
 		
 		try {
-			Thread.sleep(000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
