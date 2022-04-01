@@ -69,7 +69,7 @@ public class OrderConfirmationPageTest extends TestBase {
 		womenPage.switchToParentPage();
 
 		try {
-			Thread.sleep(5000); // Thread to pause until all texts are displayed in the browser
+			Thread.sleep(4000); // Thread to pause until all texts are displayed in the browser
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
