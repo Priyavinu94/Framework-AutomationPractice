@@ -25,6 +25,9 @@ public class OrderPage extends TestBase {
 	@FindBy(className = "alert")
 	WebElement shoppingCartEmptyAlert;
 	
+	@FindBy(css = "p.cart_navigation a:first-child")
+	WebElement proceedToCheckOutButton;
+	
 	public String getCartTitle() {
 		return cartTitle.getText();
 	}
@@ -40,6 +43,11 @@ public class OrderPage extends TestBase {
 	
 	public String getAlertMessage() {
 		return shoppingCartEmptyAlert.getText();
+	}
+	
+	public OrderAddressPage proceedToCheckOut() {
+		proceedToCheckOutButton.click();
+		return new OrderAddressPage();
 	}
 
 }

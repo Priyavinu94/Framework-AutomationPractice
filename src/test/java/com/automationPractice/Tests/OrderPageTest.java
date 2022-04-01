@@ -42,34 +42,38 @@ public class OrderPageTest extends TestBase {
 
 		// Login successful assertions:
 		Assert.assertEquals(customerFullname, prop.getProperty("userFullname"));
-		Assert.assertEquals(welcomeText.contains("Welcome to your account."), true);
+		Assert.assertEquals(welcomeText, prop.getProperty("welcomeText"));
 
 		// Navigating to Women Page
 		womenPage = myAccountPage.clickWomenCategory();
-		Assert.assertEquals(womenPage.getCategoryTitle(), "WOMEN");
+		Assert.assertEquals(womenPage.getCategoryTitle(), prop.getProperty("category"));
 		
-		womenPage.addFirstProductToCart();
+		womenPage.clickOnProduct();
+		womenPage.switchToIframe();
+		womenPage.productIframeAddtoCart();
+		womenPage.switchToParentPage();
+		
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		String SuccessMessage = womenPage.getAddedToCartMessage();
 		String totalPriceWomenPage = womenPage.getTotalPrice();
-		Assert.assertEquals(SuccessMessage, "Product successfully added to your shopping cart");
+		Assert.assertEquals(SuccessMessage, prop.getProperty("AddedToCartMessage"));
 		
 		orderPage = womenPage.clickProceedToCheckOut();
 		String cartTitle = orderPage.getCartTitle();
-		Assert.assertEquals(cartTitle.contains("SHOPPING-CART SUMMARY"), true);
+		Assert.assertEquals(cartTitle.contains(prop.getProperty("cartTitle")), true);
 		Assert.assertEquals(totalPriceWomenPage, orderPage.getTotalPrice());
 		
 		orderPage = orderPage.deleteProductFromCart();
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		Assert.assertEquals(orderPage.getAlertMessage(), "Your shopping cart is empty.");
+		Assert.assertEquals(orderPage.getAlertMessage(), prop.getProperty("cartEmptyMessage"));
 	
 	}
 	
