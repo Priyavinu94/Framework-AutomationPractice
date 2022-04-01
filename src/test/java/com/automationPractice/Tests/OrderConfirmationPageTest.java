@@ -103,5 +103,8 @@ public class OrderConfirmationPageTest extends TestBase {
 		Assert.assertEquals(orderConfirmationPage.getOrderConfirmation(), prop.getProperty("orderConfirmationText"));
 
 	}
-
+	
+	public void closeBrowser() {
+		tearDown();
+	}
 }
