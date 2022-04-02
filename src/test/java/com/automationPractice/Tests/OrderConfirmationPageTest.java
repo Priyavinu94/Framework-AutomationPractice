@@ -39,14 +39,15 @@ public class OrderConfirmationPageTest extends TestBase {
 	@Test
 	public void verifyUserCanComlpeteOrder() {
 
-		//navigating to my account page
+		// navigating to my account page
 		myAccountPage = loginPage.loginToMyAccount(prop.getProperty("userEmail"), prop.getProperty("userPassword"));
-		
+
 		// navigates to women category and asserting
 		womenPage = myAccountPage.clickWomenCategory();
-		
+
 		// select product
-		orderPage = womenPage.selectProductAndCheckOut(prop.getProperty("productQuantity"), prop.getProperty("productSize"));
+		orderPage = womenPage.selectProductAndCheckOut(prop.getProperty("productQuantity"),
+				prop.getProperty("productSize"));
 
 		// navigates to address details page, enter order message
 		addressPage = orderPage.proceedToCheckOut();
@@ -62,10 +63,11 @@ public class OrderConfirmationPageTest extends TestBase {
 
 		// click on final checkout to navigate to order confirmation page
 		orderConfirmationPage = payConfirmationPage.confirmPurchaseOrder();
-		Assert.assertEquals(orderConfirmationPage.getOrderConfirmation(), prop.getProperty("orderConfirmationText"));
+		Assert.assertEquals(orderConfirmationPage.getOrderConfirmation(), prop.getProperty("orderConfirmationText"),
+				"Order confirmation message not received as expected");
 
 	}
-	
+
 	public void closeBrowser() {
 		tearDown();
 	}
