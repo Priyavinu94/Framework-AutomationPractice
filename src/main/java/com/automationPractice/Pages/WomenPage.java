@@ -44,7 +44,7 @@ public class WomenPage extends TestBase {
 
 	@FindBy(id = "layer_cart_product_title")
 	WebElement productTitleCart;
-	
+
 	@FindBy(id = "layer_cart_product_quantity")
 	WebElement prodQuantityCart;
 
@@ -83,7 +83,7 @@ public class WomenPage extends TestBase {
 	public void productIframeAddtoCart() {
 		iframeAddToCartButton.click();
 	}
-	
+
 	public void switchToParentPage() {
 		driver.switchTo().defaultContent();
 	}
@@ -95,7 +95,7 @@ public class WomenPage extends TestBase {
 	public String getProductQuantityInCart() {
 		return prodQuantityCart.getText();
 	}
-	
+
 	public String getProductTitleInCart() {
 		return productTitleCart.getText();
 	}
@@ -105,6 +105,20 @@ public class WomenPage extends TestBase {
 	}
 
 	public OrderPage clickProceedToCheckOut() {
+		proceedToCheckoutButton.click();
+		return new OrderPage();
+	}
+
+	public OrderPage selectProductAndCheckOut(String quantity, String size) {
+		
+		firstProductQuickView.click();
+		driver.switchTo().frame(firstProductIframe);
+		quantityInput.clear();
+		quantityInput.sendKeys(quantity);
+		select = new Select(sizeSelectionBox);
+		select.selectByVisibleText(size);
+		iframeAddToCartButton.click();
+		driver.switchTo().defaultContent();
 		proceedToCheckoutButton.click();
 		return new OrderPage();
 	}

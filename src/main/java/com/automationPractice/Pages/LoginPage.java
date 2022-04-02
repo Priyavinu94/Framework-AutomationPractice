@@ -35,4 +35,11 @@ public class LoginPage extends TestBase {
 		signInButton.click();
 		return new MyAccountPage();
 	}
+	
+	public MyAccountPage loginToMyAccount(String email, String password) {
+		emailInput.sendKeys(email); 
+		passwordInput.sendKeys(password); 
+		signInButton.click();
+		return new MyAccountPage();
+	}
 }
