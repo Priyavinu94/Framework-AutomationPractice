@@ -5,12 +5,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.automationPractice.BasePackage.TestBase;
+import com.automationPractice.util.Utils;
 
 public class OrderAddressPage extends TestBase {
 
 	public OrderAddressPage() {
 		
 		PageFactory.initElements(driver, this);
+		waitForDocumentReadyState(10);
 	}
 	
 	@FindBy(css = "#ordermsg textarea")
@@ -20,11 +22,15 @@ public class OrderAddressPage extends TestBase {
 	WebElement proceedToCheckOutButton;
 	
 	public void enterOrderMessage(String message) {
-		orderMessageBox.sendKeys(message);
+		Utils.sendData(orderMessageBox, message);
 	}
 	
 	public OrderShippingPage proceedToCheckOut() {
-		proceedToCheckOutButton.click();
+		Utils.clickOnElement(proceedToCheckOutButton, 10);
 		return new OrderShippingPage();
+	}
+	
+	public String getPageTitle() {
+		return driver.getTitle();
 	}
 }

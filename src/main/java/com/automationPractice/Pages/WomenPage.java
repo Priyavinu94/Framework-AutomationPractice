@@ -7,12 +7,14 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 import com.automationPractice.BasePackage.TestBase;
+import com.automationPractice.util.Utils;
 
 public class WomenPage extends TestBase {
 
 	public WomenPage() {
 
 		PageFactory.initElements(driver, this);
+		waitForDocumentReadyState(10);
 	}
 
 	Actions act = new Actions(driver);
@@ -55,33 +57,32 @@ public class WomenPage extends TestBase {
 	WebElement proceedToCheckoutButton;
 
 	public String getCategoryTitle() {
-		return categoryTitle.getText();
+		return Utils.getTextFromElement(categoryTitle, 10);
 	}
 
 	public void clickOnProduct() {
-		firstProductQuickView.click();
+		Utils.clickOnElement(firstProductQuickView, 10);
 	}
 
 	public void switchToIframe() {
-		driver.switchTo().frame(firstProductIframe);
+		Utils.switchToFrame(firstProductIframe);
 	}
 
 	public void selectProductQuantityInIFrame(String quantity) {
-		quantityInput.clear();
-		quantityInput.sendKeys(quantity);
+		Utils.clearInputArea(quantityInput);
+		Utils.sendData(quantityInput, quantity);
 	}
 
 	public void selectProductSizeInIframe(String size) {
-		select = new Select(sizeSelectionBox);
-		select.selectByVisibleText(size);
+		Utils.selectFromDropDownByVisibleTextOrValue(sizeSelectionBox, size);
 	}
 
 	public String getProductNameFromIframe() {
-		return productNameDisplayIframe.getText();
+		return Utils.getTextFromElement(productNameDisplayIframe, 10);
 	}
 
 	public void productIframeAddtoCart() {
-		iframeAddToCartButton.click();
+		Utils.clickOnElement(iframeAddToCartButton, 10);
 	}
 
 	public void switchToParentPage() {
@@ -89,38 +90,39 @@ public class WomenPage extends TestBase {
 	}
 
 	public String getAddedToCartMessage() {
-		return productAddedToCartMessage.getText();
+		return Utils.getTextFromElement(productAddedToCartMessage, 10);
 	}
 
 	public String getProductQuantityInCart() {
-		return prodQuantityCart.getText();
+		return Utils.getTextFromElement(prodQuantityCart, 10);
 	}
 
 	public String getProductTitleInCart() {
-		return productTitleCart.getText();
+		return Utils.getTextFromElement(productTitleCart, 10);
 	}
 
 	public String getTotalPrice() {
-		return totalPrice.getText();
+		return Utils.getTextFromElement(totalPrice, 10);
 	}
 
 	public OrderPage clickProceedToCheckOut() {
-		proceedToCheckoutButton.click();
+		Utils.clickOnElement(proceedToCheckoutButton, 10);
 		return new OrderPage();
 	}
 
-	public OrderPage selectProductAndCheckOut(String quantity, String size) {
+	public void selectProductAndAddToCart(String quantity, String size) {
 		
-		firstProductQuickView.click();
-		driver.switchTo().frame(firstProductIframe);
-		quantityInput.clear();
-		quantityInput.sendKeys(quantity);
-		select = new Select(sizeSelectionBox);
-		select.selectByVisibleText(size);
-		iframeAddToCartButton.click();
-		driver.switchTo().defaultContent();
-		proceedToCheckoutButton.click();
-		return new OrderPage();
+		Utils.clickOnElement(firstProductQuickView, 10);
+		Utils.switchToFrame(firstProductIframe);
+		Utils.clearInputArea(quantityInput);
+		Utils.sendData(quantityInput, quantity);
+		Utils.selectFromDropDownByVisibleTextOrValue(sizeSelectionBox, size);
+		Utils.clickOnElement(iframeAddToCartButton, 10);
+		
+	}
+	
+	public String getPageTitle() {
+		return driver.getTitle();
 	}
 
 }

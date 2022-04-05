@@ -5,12 +5,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.automationPractice.BasePackage.TestBase;
+import com.automationPractice.util.Utils;
 
 public class LoginPage extends TestBase {
 
 	public LoginPage() {
 
 		PageFactory.initElements(driver, this);
+		waitForDocumentReadyState(10);
 	}
 	
 	
@@ -24,22 +26,26 @@ public class LoginPage extends TestBase {
 	WebElement signInButton;
 	
 	public void enterEmailId(String email) {
-		emailInput.sendKeys(email); 
+		Utils.sendData(emailInput, email);
 	}
 	
 	public void enterPassword(String password) {
-		passwordInput.sendKeys(password); 
+		Utils.sendData(passwordInput, password);
 	}
 	
 	public MyAccountPage clickSignInButton() {
-		signInButton.click();
+		Utils.clickOnElement(signInButton, 10);
 		return new MyAccountPage();
 	}
 	
+	public String getPageTitle() {
+		return driver.getTitle();
+	}
+	
 	public MyAccountPage loginToMyAccount(String email, String password) {
-		emailInput.sendKeys(email); 
-		passwordInput.sendKeys(password); 
-		signInButton.click();
+		Utils.sendData(emailInput, email);
+		Utils.sendData(passwordInput, password);
+		Utils.clickOnElement(signInButton, 10);
 		return new MyAccountPage();
 	}
 }

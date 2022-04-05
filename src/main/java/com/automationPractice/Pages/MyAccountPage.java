@@ -5,12 +5,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.automationPractice.BasePackage.TestBase;
+import com.automationPractice.util.Utils;
 
 public class MyAccountPage extends TestBase{
 	
 	public MyAccountPage() {
 
 		PageFactory.initElements(driver, this);
+		waitForDocumentReadyState(10);
 	}
 
 	@FindBy(className = "account")
@@ -23,16 +25,19 @@ public class MyAccountPage extends TestBase{
 	WebElement welcomeMessage;
 	
 	public String getUserFullName() {
-		return userFullname.getText();
+		return Utils.getTextFromElement(userFullname, 10);
 	}
 	
 	public String getWelcomeMessage() {
-		return welcomeMessage.getText();
+		return Utils.getTextFromElement(welcomeMessage, 10);
 	}
 	
 	public WomenPage clickWomenCategory() {
-		womenCategory.click();
+		Utils.clickOnElement(womenCategory, 10);
 		return new WomenPage();
 	}
 	
+	public String getPageTitle() {
+		return driver.getTitle();
+	}
 }

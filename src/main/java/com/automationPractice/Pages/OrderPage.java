@@ -5,12 +5,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.automationPractice.BasePackage.TestBase;
+import com.automationPractice.util.Utils;
 
 public class OrderPage extends TestBase {
 	
 	public OrderPage() {
 
 		PageFactory.initElements(driver, this);
+		waitForDocumentReadyState(10);
 	}
 	
 	@FindBy(xpath="//table[@id='cart_summary']//tbody//tr[1]//td//a[@title='Delete']")
@@ -29,25 +31,28 @@ public class OrderPage extends TestBase {
 	WebElement proceedToCheckOutButton;
 	
 	public String getCartTitle() {
-		return cartTitle.getText();
+		return Utils.getTextFromElement(cartTitle, 10);
 	}
 	
 	public String getTotalPrice() {
-		return totalPrice.getText();
+		return Utils.getTextFromElement(totalPrice, 10);
 	}
 	
 	public OrderPage deleteProductFromCart() {
-		productDeleteButton.click();
+		Utils.clickOnElement(productDeleteButton, 10);
 		return new OrderPage();
 	}
 	
 	public String getAlertMessage() {
-		return shoppingCartEmptyAlert.getText();
+		return Utils.getTextFromElement(shoppingCartEmptyAlert, 10);
 	}
 	
 	public OrderAddressPage proceedToCheckOut() {
-		proceedToCheckOutButton.click();
+		Utils.clickOnElement(proceedToCheckOutButton, 10);
 		return new OrderAddressPage();
 	}
-
+	
+	public String getPageTitle() {
+		return driver.getTitle();
+	}
 }

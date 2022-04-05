@@ -10,7 +10,7 @@ import com.automationPractice.Pages.LoginPage;
 import com.automationPractice.Pages.MyAccountPage;
 import com.automationPractice.Pages.OrderPage;
 import com.automationPractice.Pages.WomenPage;
-import com.automationPractice.util.UtilityClass;
+import com.automationPractice.util.Utils;
 
 public class OrderPageTest extends TestBase {
 
@@ -50,7 +50,7 @@ public class OrderPageTest extends TestBase {
 		womenPage.productIframeAddtoCart();
 		womenPage.switchToParentPage();
 
-		UtilityClass.staticWait(5000);
+		//Utils.staticWait(5000);
 		String totalPriceWomenPage = womenPage.getTotalPrice();
 		Assert.assertEquals(womenPage.getAddedToCartMessage(), prop.getProperty("AddedToCartMessage"),
 				"Added to cart message is not as expected");
@@ -61,7 +61,7 @@ public class OrderPageTest extends TestBase {
 		Assert.assertEquals(totalPriceWomenPage, orderPage.getTotalPrice(), "Price does not match with previous page");
 
 		orderPage = orderPage.deleteProductFromCart();
-		UtilityClass.staticWait(5000);
+		Utils.staticWait(5000);
 		Assert.assertEquals(orderPage.getAlertMessage(), prop.getProperty("cartEmptyMessage"),
 				"Items deleted message not as expected");
 

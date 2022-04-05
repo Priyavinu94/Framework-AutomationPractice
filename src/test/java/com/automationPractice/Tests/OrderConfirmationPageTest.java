@@ -46,8 +46,11 @@ public class OrderConfirmationPageTest extends TestBase {
 		womenPage = myAccountPage.clickWomenCategory();
 
 		// select product
-		orderPage = womenPage.selectProductAndCheckOut(prop.getProperty("productQuantity"),
+		womenPage.selectProductAndAddToCart(prop.getProperty("productQuantity"),
 				prop.getProperty("productSize"));
+		womenPage.switchToParentPage();
+		orderPage = womenPage.clickProceedToCheckOut();
+		
 
 		// navigates to address details page, enter order message
 		addressPage = orderPage.proceedToCheckOut();
