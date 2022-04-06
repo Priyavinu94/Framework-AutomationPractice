@@ -15,6 +15,7 @@ import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -62,11 +63,6 @@ public class Utils extends TestBase {
 		String password = "user" + randomStringForPassword;
 		return password;
 	}
-	
-//	public static String generateRandomName(int letterCount) {
-//		return RandomStringUtils.randomAlphabetic(letterCount);
-//	}
-	
 	
 	/**
 	 * Takes the screenshot of a failed test case
@@ -129,7 +125,15 @@ public class Utils extends TestBase {
 	 *                     clickable state
 	 */
 	public static void clickOnElement(WebElement element, int timeOutInSec) {
-		waitForElementToBeClickable(element, timeOutInSec).click();
+		try {
+			waitForElementToBeClickable(element, timeOutInSec).click();
+		} catch (TimeoutException e) {
+			System.out.println("Element " + element + " is not visible");
+			e.printStackTrace();
+		} catch (NoSuchElementException e) {
+			System.out.println("Not able to find such element : " + element);
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -142,15 +146,9 @@ public class Utils extends TestBase {
 	 * @return The same WebElement on which Script needs to be interacted
 	 */
 	public static WebElement waitForElementToBeVisible(WebElement element, int timeOutInSec) {
-		try {
-			return new WebDriverWait(driver, timeOutInSec).until(ExpectedConditions.visibilityOf(element));
-		} catch (ElementNotVisibleException e) {
-			System.out.println("Element is not visible");
-			return null;
-		}
+		return new WebDriverWait(driver, timeOutInSec).until(ExpectedConditions.visibilityOf(element));
 	}
-	
-	
+
 	/**
 	 * Apply explicit wait on a WebElement with an expected condition of being not
 	 * in a selected state
@@ -207,7 +205,11 @@ public class Utils extends TestBase {
 	 * @param element the target WebElement to move to
 	 */
 	public static void moveToElement(WebElement element) {
-		new Actions(driver).moveToElement(waitForElementToBeVisible(element, 5)).build().perform();
+		try {
+			new Actions(driver).moveToElement(waitForElementToBeVisible(element, 5)).build().perform();
+		} catch (NoSuchElementException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
