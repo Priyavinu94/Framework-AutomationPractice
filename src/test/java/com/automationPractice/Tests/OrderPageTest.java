@@ -1,8 +1,10 @@
 package com.automationPractice.Tests;
 
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.automationPractice.BasePackage.TestBase;
 import com.automationPractice.Pages.HomePage;
@@ -19,10 +21,12 @@ public class OrderPageTest extends TestBase {
 	MyAccountPage myAccountPage;
 	WomenPage womenPage;
 	OrderPage orderPage;
+	SoftAssert sf;
 
 	@BeforeMethod
 	public void openBrowser() {
 		intialiseDriver();
+		sf = new SoftAssert();
 		homePage = new HomePage();
 		loginPage = homePage.clickSignInButton();
 	}
@@ -45,21 +49,23 @@ public class OrderPageTest extends TestBase {
 
 		Utils.staticWait(5000);
 		String totalPriceWomenPage = womenPage.getTotalPrice();
-		Assert.assertEquals(womenPage.getAddedToCartMessage(), prop.getProperty("AddedToCartMessage"),
+		sf.assertEquals(womenPage.getAddedToCartMessage(), prop.getProperty("AddedToCartMessage"),
 				"Added to cart message is not as expected");
 
 		orderPage = womenPage.clickProceedToCheckOut();
 		String cartTitle = orderPage.getCartTitle();
-		Assert.assertEquals(cartTitle.contains(prop.getProperty("cartTitle")), true, "Cart title not as expected");
-		Assert.assertEquals(totalPriceWomenPage, orderPage.getTotalPrice(), "Price does not match with previous page");
+		sf.assertEquals(cartTitle.contains(prop.getProperty("cartTitle")), true, "Cart title not as expected");
+		sf.assertEquals(totalPriceWomenPage, orderPage.getTotalPrice(), "Price does not match with previous page");
 
 		orderPage = orderPage.deleteProductFromCart();
 		Utils.staticWait(5000);
-		Assert.assertEquals(orderPage.getAlertMessage(), prop.getProperty("cartEmptyMessage"),
+		sf.assertEquals(orderPage.getAlertMessage(), prop.getProperty("cartEmptyMessage"),
 				"Items deleted message not as expected");
 
+		sf.assertAll();
 	}
-
+	
+	@AfterMethod
 	public void closeBrowser() {
 		tearDown();
 	}

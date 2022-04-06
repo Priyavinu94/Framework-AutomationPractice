@@ -6,6 +6,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.automationPractice.BasePackage.TestBase;
+import com.automationPractice.Pages.CreateAccountPage;
 import com.automationPractice.Pages.HomePage;
 import com.automationPractice.Pages.LoginPage;
 
@@ -13,6 +14,7 @@ public class LoginPageTest extends TestBase {
 
 	HomePage homePage;
 	LoginPage loginPage;
+	CreateAccountPage createAccPage;
 
 	@BeforeMethod
 	public void openBrowser() {
@@ -25,7 +27,7 @@ public class LoginPageTest extends TestBase {
 
 		loginPage = homePage.clickSignInButton();
 
-		loginPage.createNewAccount("");
+		createAccPage = loginPage.createNewAccount("");
 		Assert.assertEquals(
 				loginPage.getErrorAtCreateAccount().contains(prop.getProperty("createAccountErrorMessageText")), true,
 				"Error not displayed");

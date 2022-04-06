@@ -1,8 +1,10 @@
 package com.automationPractice.Tests;
 
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.automationPractice.BasePackage.TestBase;
 import com.automationPractice.Pages.HomePage;
@@ -28,10 +30,12 @@ public class OrderConfirmationPageTest extends TestBase {
 	OrderPaymentSelectionPage paymentPage;
 	MyStorePaymentPage payConfirmationPage;
 	OrderConfirmationPage orderConfirmationPage;
+	SoftAssert sf;
 
 	@BeforeMethod
 	public void openBrowser() {
 		intialiseDriver();
+		sf = new SoftAssert();
 		homePage = new HomePage();
 		loginPage = homePage.clickSignInButton();
 	}
@@ -70,7 +74,8 @@ public class OrderConfirmationPageTest extends TestBase {
 				"Order confirmation message not received as expected");
 
 	}
-
+	
+	@AfterMethod
 	public void closeBrowser() {
 		tearDown();
 	}
