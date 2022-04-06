@@ -33,13 +33,6 @@ public class OrderPageTest extends TestBase {
 		// Navigating to My Account Page
 		myAccountPage = loginPage.loginToMyAccount(prop.getProperty("userEmail"), prop.getProperty("userPassword"));
 
-		String customerFullname = myAccountPage.getUserFullName();
-		String welcomeText = myAccountPage.getWelcomeMessage();
-
-		// Login successful assertions:
-		Assert.assertEquals(customerFullname, prop.getProperty("userFullname"), "Username does not match");
-		Assert.assertEquals(welcomeText, prop.getProperty("welcomeText"), "Welcome text is not as expected");
-
 		// Navigating to Women Page
 		womenPage = myAccountPage.clickWomenCategory();
 		Assert.assertEquals(womenPage.getCategoryTitle(), prop.getProperty("category"),
@@ -50,7 +43,7 @@ public class OrderPageTest extends TestBase {
 		womenPage.productIframeAddtoCart();
 		womenPage.switchToParentPage();
 
-		//Utils.staticWait(5000);
+		Utils.staticWait(5000);
 		String totalPriceWomenPage = womenPage.getTotalPrice();
 		Assert.assertEquals(womenPage.getAddedToCartMessage(), prop.getProperty("AddedToCartMessage"),
 				"Added to cart message is not as expected");

@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.NoSuchFrameException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
@@ -59,7 +62,12 @@ public class Utils extends TestBase {
 		String password = "user" + randomStringForPassword;
 		return password;
 	}
-
+	
+//	public static String generateRandomName(int letterCount) {
+//		return RandomStringUtils.randomAlphabetic(letterCount);
+//	}
+	
+	
 	/**
 	 * Takes the screenshot of a failed test case
 	 * 
@@ -134,9 +142,15 @@ public class Utils extends TestBase {
 	 * @return The same WebElement on which Script needs to be interacted
 	 */
 	public static WebElement waitForElementToBeVisible(WebElement element, int timeOutInSec) {
-		return new WebDriverWait(driver, timeOutInSec).until(ExpectedConditions.visibilityOf(element));
+		try {
+			return new WebDriverWait(driver, timeOutInSec).until(ExpectedConditions.visibilityOf(element));
+		} catch (ElementNotVisibleException e) {
+			System.out.println("Element is not visible");
+			return null;
+		}
 	}
-
+	
+	
 	/**
 	 * Apply explicit wait on a WebElement with an expected condition of being not
 	 * in a selected state
@@ -240,13 +254,19 @@ public class Utils extends TestBase {
 	 * element with tag INPUT or TEXT AREA
 	 * 
 	 * @param element text entry WebElement
-	 * @param text character sequence to send to the element
+	 * @param text    character sequence to send to the element
 	 */
 	public static void sendData(WebElement element, String text) {
 		waitForElementToBeVisible(element, 10).sendKeys(text);
 	}
 
-	public static void switchToWindowHandle(WebElement element) {
+	/**
+	 * Switch to new Window by finding its unique ID(handle)
+	 * 
+	 * @param element The WebElement on which the action performed opens a new
+	 *                Window
+	 */
+	public static void switchToWindow(WebElement element) {
 		String parentHandle = driver.getWindowHandle();
 		clickOnElement(element, 10);
 		Set<String> getAllHandles = driver.getWindowHandles();
@@ -257,17 +277,48 @@ public class Utils extends TestBase {
 		}
 	}
 
+	/**
+	 * Waits for the frame element to be visible and switches into frame
+	 * 
+	 * @param element The frame element to switch into from the current web page
+	 */
 	public static void switchToFrame(WebElement element) {
-		driver.switchTo().frame(waitForElementToBeVisible(element, 10));
+		try {
+			driver.switchTo().frame(waitForElementToBeVisible(element, 10));
+		} catch (NoSuchFrameException e) {
+			System.out.println("No Frame located");
+			e.printStackTrace();
+		}
 	}
 
+	/**
+	 * Waits for the WebElement to be visible and get the visible text of the
+	 * element
+	 * 
+	 * @param element      The WebElement whose visible text(content) needs to be
+	 *                     retrieved
+	 * @param timeOutInSec The maximum time to wait for the WebElement to be visible
+	 * @return The visible text of the element
+	 */
 	public static String getTextFromElement(WebElement element, int timeOutInSec) {
 		return waitForElementToBeVisible(element, timeOutInSec).getText();
 	}
 
+	/**
+	 * Waits for the check box element to be in selectable state
+	 * 
+	 * @param element          The check box element which needs to be checked
+	 * @param timeOutInSeconds The maximum time to wait for the element to be
+	 *                         selectable
+	 */
 	public static void clickOnCheckBox(WebElement element, int timeOutInSeconds) {
-		if (waitForElementToBeSelectable(element, timeOutInSeconds)) {
-			element.click();
+		try {
+			if (waitForElementToBeSelectable(element, timeOutInSeconds)) {
+				element.click();
+			}
+		} catch (NoSuchElementException e) {
+			System.out.println("No check box element found");
+			e.printStackTrace();
 		}
 	}
 

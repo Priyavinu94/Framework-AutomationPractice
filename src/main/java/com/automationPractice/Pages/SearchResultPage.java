@@ -7,30 +7,27 @@ import org.openqa.selenium.support.PageFactory;
 import com.automationPractice.BasePackage.TestBase;
 import com.automationPractice.util.Utils;
 
-public class OrderShippingPage extends TestBase{
+public class SearchResultPage extends TestBase {
 	
-	public OrderShippingPage() {
+	public SearchResultPage() {
 		
 		PageFactory.initElements(driver, this);
 		waitForDocumentReadyState(10);
 	}
 	
-	@FindBy(id = "cgv")
-	WebElement checkBox;
+	@FindBy(css = "ul.product_list a.product-name")
+	WebElement productResult;
 	
-	@FindBy(css = "p.cart_navigation button")
-	WebElement proceedToCheckOutButton;
-	
-	public void clickCheckBox() {
-		Utils.clickOnCheckBox(checkBox, 10);
+	public boolean isProductAvailable()  {
+		return Utils.waitForElementToBeVisible(productResult, 10).isDisplayed();
 	}
 	
-	public OrderPaymentSelectionPage proceedToCheckOut() {
-		Utils.clickOnElement(proceedToCheckOutButton, 10);
-		return new OrderPaymentSelectionPage();
+	public String getProductTitle() {
+		return Utils.getTextFromElement(productResult, 10);
 	}
 	
 	public String getPageTitle() {
 		return driver.getTitle();
 	}
+	
 }

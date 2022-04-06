@@ -25,6 +25,15 @@ public class LoginPage extends TestBase {
 	@FindBy(id= "SubmitLogin")
 	WebElement signInButton;
 	
+	@FindBy(id = "email_create")
+	WebElement emailFieldToCreateAccount;
+	
+	@FindBy(id= "SubmitCreate")
+	WebElement createAccountButton;
+	
+	@FindBy(id = "create_account_error")
+	WebElement createAccErrorMessage;
+	
 	public void enterEmailId(String email) {
 		Utils.sendData(emailInput, email);
 	}
@@ -38,6 +47,11 @@ public class LoginPage extends TestBase {
 		return new MyAccountPage();
 	}
 	
+	public CreateAccountPage clickCreateAccountButton() {
+		Utils.clickOnElement(createAccountButton, 10);
+		return new CreateAccountPage();
+	}
+	
 	public String getPageTitle() {
 		return driver.getTitle();
 	}
@@ -47,5 +61,19 @@ public class LoginPage extends TestBase {
 		Utils.sendData(passwordInput, password);
 		Utils.clickOnElement(signInButton, 10);
 		return new MyAccountPage();
+	}
+	
+	public void enterEmailIdToCreateAccount(String email) {
+		Utils.sendData(emailFieldToCreateAccount, email);
+	}
+	
+	public CreateAccountPage createNewAccount(String email) {
+		Utils.sendData(emailFieldToCreateAccount, email);
+		Utils.clickOnElement(createAccountButton, 10);
+		return new CreateAccountPage();
+	}
+	
+	public String getErrorAtCreateAccount() {
+		return Utils.getTextFromElement(createAccErrorMessage, 10);
 	}
 }

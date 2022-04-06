@@ -1,6 +1,7 @@
 package com.automationPractice.Tests;
 
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -23,7 +24,13 @@ public class HomePageTest extends TestBase {
 		Assert.assertEquals(homePage.getPageTitle(), prop.getProperty("HomepageTitle"), "Title not displayed as expected.");
 	}
 	
+	@Test
+	public void verifyLogoIsDisplayed() {
 		
+		Assert.assertEquals(homePage.isLogoDisplayed(), true, "Logo is not displayed");
+	}
+	
+	@AfterMethod
 	public void closeBrowser() {
 		tearDown();
 	}

@@ -18,6 +18,15 @@ public class HomePage extends TestBase {
 	@FindBy(className = "login")
 	WebElement signInButton;
 	
+	@FindBy(className = "logo")
+	WebElement homePageLogo;
+	
+	@FindBy(id="search_query_top")
+	WebElement searchProductField;
+	
+	@FindBy(name="submit_search")
+	WebElement searchButton;
+	
 	public LoginPage clickSignInButton() {
 		Utils.clickOnElement(signInButton, 10);
 		return new LoginPage();
@@ -25,5 +34,16 @@ public class HomePage extends TestBase {
 	
 	public String getPageTitle() {
 		return driver.getTitle();
+	}
+	
+	public boolean isLogoDisplayed() {
+		return Utils.waitForElementToBeVisible(homePageLogo, 10).isDisplayed();
+	}
+	
+	public SearchResultPage searchProduct(String productName) {
+		Utils.sendData(searchProductField, productName);
+		Utils.scrollIntoViewUsingJavaScript(searchProductField);
+		Utils.clickOnElement(searchButton, 10);
+		return new SearchResultPage();
 	}
 }
