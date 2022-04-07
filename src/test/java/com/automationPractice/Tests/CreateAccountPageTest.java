@@ -7,6 +7,13 @@ import com.automationPractice.Pages.HomePage;
 
 public class CreateAccountPageTest extends TestBase {
 	
+	HomePage homePage;
+
+	@BeforeMethod
+	public void openBrowser() {
+		intialiseDriver();
+		homePage = new HomePage();
+	}
 	
 	
 }

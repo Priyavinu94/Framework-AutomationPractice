@@ -27,7 +27,7 @@ public class LoginPageTest extends TestBase {
 
 		loginPage = homePage.clickSignInButton();
 
-		createAccPage = loginPage.createNewAccount("");
+		createAccPage = loginPage.createNewAccount(" ");
 		Assert.assertEquals(
 				loginPage.getErrorAtCreateAccount().contains(prop.getProperty("createAccountErrorMessageText")), true,
 				"Error not displayed");

@@ -15,8 +15,11 @@ public class CreateAccountPage extends TestBase {
 		waitForDocumentReadyState(10);
 	}
 
+	@FindBy(id = "id_gender1")
+	WebElement genderInputMr;
+	
 	@FindBy(id = "id_gender2")
-	WebElement genderInput;
+	WebElement genderInputMrs;
 
 	@FindBy(id = "customer_firstname")
 	WebElement firstNameInput;
@@ -69,5 +72,65 @@ public class CreateAccountPage extends TestBase {
 	@FindBy(id = "submitAccount")
 	WebElement registerButton;
 
+	public void selectGender(String gender) {
+		if (gender.equalsIgnoreCase("Mr")) {
+			Utils.clickOnElement(genderInputMr, 10);
+		} else if (gender.equalsIgnoreCase("Mrs")) {
+			Utils.clickOnElement(genderInputMrs, 10);
+		} 
+	}
 	
+	public void enterFirstName(String firstName) {
+		Utils.sendData(firstNameInput, firstName);
+	}
+	
+	public void enterLastName(String lastName) {
+		Utils.sendData(lastNameInput, lastName);
+	}
+	
+	public void enterPassword(String password) {
+		Utils.sendData(passwordInput, password);
+	}
+	
+	public void enterDOB(String date, String month, String year) {
+		Utils.selectFromDropDownByVisibleTextOrValue(dateInput, date);
+		Utils.selectFromDropDownByVisibleTextOrValue(monthInput, month);
+		Utils.selectFromDropDownByVisibleTextOrValue(yearInput, year);
+	}
+	
+	public void selectCheckbox() {
+		Utils.clickOnCheckBox(newsletterCheckbox, 10);
+		Utils.clickOnCheckBox(receiveOfferCheckbox, 10);
+	}
+	
+	public void enterStreetAddress(String streetAdd) {
+		Utils.sendData(addressLine1Input, streetAdd);
+	}
+	
+	public void enterCity(String city) {
+		Utils.sendData(addressCityInput, city);
+	}
+	
+	public void selectState(String state) {
+		Utils.selectFromDropDownByVisibleTextOrValue(addressStateInput, state);
+	}
+	
+	public void enterZip(String zip) {
+		Utils.sendData(addressZipcodeInput, zip);
+	}
+	
+	public void selectCountry(String country) {
+		Utils.selectFromDropDownByVisibleTextOrValue(addressCountryInput, country);
+	}
+	
+	public void enterPhoneNo(String phoneNo) {
+		Utils.sendData(phoneNumInput, phoneNo);
+	}
+
+
+	public MyAccountPage createNewAccount(String email) {
+		Utils.clickOnElement(registerButton, 10);
+		return new MyAccountPage();
+	}
+
 }

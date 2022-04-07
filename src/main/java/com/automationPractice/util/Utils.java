@@ -65,6 +65,26 @@ public class Utils extends TestBase {
 	}
 	
 	/**
+	 * Create random name
+	 * 
+	 * @param letterCount number of letters to be present in the name
+	 * @return a random String
+	 */
+	public static String generateRandomName(int letterCount) {
+		return RandomStringUtils.randomAlphabetic(letterCount);
+	}
+	
+	/**
+	 * Create random phone number
+	 * 
+	 * @param digitCount number of digits to be in the phone no
+	 * @return a random String of numeric
+	 */
+	public static String generateRandomPhoneNo(int digitCount) {
+		return RandomStringUtils.randomNumeric(10);
+	}
+
+	/**
 	 * Takes the screenshot of a failed test case
 	 * 
 	 * @param nameOfTestCase the name of failed test case
