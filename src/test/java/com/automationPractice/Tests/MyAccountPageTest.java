@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import com.automationPractice.BasePackage.TestBase;
+import com.automationPractice.Pages.CreateAccountPage;
 import com.automationPractice.Pages.HomePage;
 import com.automationPractice.Pages.LoginPage;
 import com.automationPractice.Pages.MyAccountPage;
@@ -18,6 +19,7 @@ public class MyAccountPageTest extends TestBase {
 
 	HomePage homePage;
 	LoginPage loginPage;
+	CreateAccountPage createAccountPage;
 	MyAccountPage myAccountPage;
 	SoftAssert sf;
 
@@ -30,7 +32,7 @@ public class MyAccountPageTest extends TestBase {
 		sf = new SoftAssert();
 	}
 
-	@Test(dataProvider = "signUpDataProvider")
+	@Test(dataProvider = "ValidSignUpDataProvider")
 	public void verifyUserCanSuccessfullyLogin(String email, String password) {
 
 		// Navigating to My Account Page
@@ -46,36 +48,18 @@ public class MyAccountPageTest extends TestBase {
 		sf.assertAll();
 	}
 
-	@AfterMethod
-	public void closeBrowser() {
-		tearDown();
-	}
-
-//	@DataProvider(name = "accountCreationDataProvider")
-//	public void readAndFeedNewUserDataToCreateAccount() throws IOException {
-//		String filePath = "C:\\Users\\VINOD\\Desktop\\PIVOT\\TestDataAutomationPractice.xlsx";
-//		int rows = ExcelUtils.getRowCount(filePath, "AccountCreationData");
-//		int columns = ExcelUtils.getCellCount(filePath, "AccountCreationData", rows);
-//
-//		String[][] createAccountData = new String[rows][columns];
-//
-//		for (int i = 1; i < rows; i++) {
-//			for (int j = 0; j < columns; j++) {
-//				createAccountData[i-1][j] = ExcelUtils.getCellData(filePath, "AccountCreationData", i, j);
-//			}
-//		}
-//	}
-
-	@DataProvider(name = "signUpDataProvider")
-	public String[][] readAndFeedLoginData() throws IOException {
+	
+	@DataProvider(name = "ValidSignUpDataProvider")
+	public String[][] readAndFeedValidLoginData() throws IOException {
 		String filePath = "C:\\Users\\VINOD\\Desktop\\PIVOT\\TestDataAutomationPractice.xlsx";
-		int rows = ExcelUtils.getRowCount(filePath, "LoginCredentials");
-		int columns = ExcelUtils.getCellCount(filePath, "LoginCredentials", rows);
+		int rows = ExcelUtils.getRowCount(filePath, "ValidLoginCredentials"); // 6
+		int columns = ExcelUtils.getCellCount(filePath, "ValidLoginCredentials", rows); // 2
 
 		String[][] loginData = new String[rows][columns];
-		for (int i = 1; i < rows; i++) {
+		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
-				loginData[i - 1][j] = ExcelUtils.getCellData(filePath, "LoginCredentials", i, j);
+				loginData[i][j] = ExcelUtils.getCellData(filePath, "ValidLoginCredentials", i + 1, j);
+
 			}
 		}
 		return loginData;

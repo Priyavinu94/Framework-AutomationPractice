@@ -34,6 +34,9 @@ public class LoginPage extends TestBase {
 	@FindBy(id = "create_account_error")
 	WebElement createAccErrorMessage;
 	
+	@FindBy(css = "#center_column>div.alert")
+	WebElement invalidSignInErrorMessage;
+	
 	public void enterEmailId(String email) {
 		Utils.sendData(emailInput, email);
 	}
@@ -47,7 +50,8 @@ public class LoginPage extends TestBase {
 		return new MyAccountPage();
 	}
 	
-	public CreateAccountPage clickCreateAccountButton() {
+	public CreateAccountPage clickCreateAccountButton(String email) {
+		enterEmailIdToCreateAccount(email);
 		Utils.clickOnElement(createAccountButton, 10);
 		return new CreateAccountPage();
 	}
@@ -75,5 +79,9 @@ public class LoginPage extends TestBase {
 	
 	public String getErrorAtCreateAccount() {
 		return Utils.getTextFromElement(createAccErrorMessage, 10);
+	}
+	
+	public String getErrorAtInvalidSignIn() {
+		return Utils.getTextFromElement(invalidSignInErrorMessage, 10);
 	}
 }

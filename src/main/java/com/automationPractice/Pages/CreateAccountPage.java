@@ -45,8 +45,14 @@ public class CreateAccountPage extends TestBase {
 	@FindBy(id = "optin")
 	WebElement receiveOfferCheckbox;
 
+	@FindBy(id = "company")
+	WebElement companyInput;
+	
 	@FindBy(id = "address1")
 	WebElement addressLine1Input;
+	
+	@FindBy(id = "address2")
+	WebElement addressLine2Input;
 
 	@FindBy(id = "city")
 	WebElement addressCityInput;
@@ -63,6 +69,9 @@ public class CreateAccountPage extends TestBase {
 	@FindBy(id = "other")
 	WebElement additionalInfoInput;
 
+	@FindBy(id = "phone")
+	WebElement homePhoneInput;
+	
 	@FindBy(id = "phone_mobile")
 	WebElement phoneNumInput;
 
@@ -103,9 +112,18 @@ public class CreateAccountPage extends TestBase {
 		Utils.clickOnCheckBox(receiveOfferCheckbox, 10);
 	}
 	
+	
+	public void enterCompanyName(String phoneNo) {
+		Utils.sendData(companyInput, phoneNo);
+	}
+	
 	public void enterStreetAddress(String streetAdd) {
 		Utils.sendData(addressLine1Input, streetAdd);
 	}
+	
+	public void enterAddressLine2(String phoneNo) {
+		Utils.sendData(addressLine2Input, phoneNo);
+	} 
 	
 	public void enterCity(String city) {
 		Utils.sendData(addressCityInput, city);
@@ -123,8 +141,20 @@ public class CreateAccountPage extends TestBase {
 		Utils.selectFromDropDownByVisibleTextOrValue(addressCountryInput, country);
 	}
 	
+	public void enterAdditionalInfo(String phoneNo) {
+		Utils.sendData(additionalInfoInput, phoneNo);
+	}
+	
+	public void enterHomePhoneNo(String phoneNo) {
+		Utils.sendData(homePhoneInput, phoneNo);
+	}
+	
 	public void enterPhoneNo(String phoneNo) {
 		Utils.sendData(phoneNumInput, phoneNo);
+	}
+	
+	public void enterAliasAddress(String aliasInfo) {
+		Utils.sendData(aliasAddressInput, aliasInfo);
 	}
 
 

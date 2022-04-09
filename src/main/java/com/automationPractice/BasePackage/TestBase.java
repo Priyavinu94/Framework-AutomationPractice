@@ -47,7 +47,7 @@ public class TestBase {
 		try {
 
 			configFile = new FileInputStream(
-					"C:\\Users\\VINOD\\eclipse-workspace\\FrameworkAutomationPractice\\src\\main\\java\\com\\automationPractice\\config\\configuration.properties");
+					"src//main//java//com//automationPractice//config//configuration.properties");
 			prop.load(configFile);
 
 		} catch (IOException exception) {
